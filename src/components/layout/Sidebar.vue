@@ -29,9 +29,9 @@ const toogleMenu = () => {
         <span class="material-icons">home</span>
         <span class="menu-link-name">Home</span>
       </router-link>
-      <router-link class="link" to="/about">
-        <span class="material-icons">assignment</span>
-        <span class="menu-link-name">About</span>
+      <router-link class="link" to="/patients">
+        <span class="material-icons">group</span>
+        <span class="menu-link-name">Patients</span>
       </router-link>
     </div>
 
@@ -175,14 +175,6 @@ aside {
   @media (max-width: 768px) {
     position: fixed;
     z-index: 999;
-  }
-
-  button {
-    cursor: pointer;
-    appearance: none;
-    border: none;
-    outline: none;
-    background: none;
   }
 }
 </style>
