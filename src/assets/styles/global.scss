@@ -1,0 +1,56 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+:root {
+  --primary: #000000;
+  --secondary: #333333;
+
+  --greenish: #114d4d;
+  --green-light: #6e9987;
+  --green-bright: #3f9300;
+
+  --reddish: #cb3933;
+  --red-light: #e27f7b;
+
+  --white: #ffffff;
+  --white-two: #d8d8d8;
+
+  --pinkish-grey: #ce9c9c;
+
+  --grey: #666666;
+  --greyish-brown: #3f3f3f;
+  --grey-light: #b5b5b5;
+
+  --sidebar-width: 300px;
+}
+
+body,
+html {
+  padding: 0;
+  margin: 0;
+  height: auto;
+}
+
+body {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-weight: normal;
+  color: var(--primary);
+  background-color: var(--grey-light);
+}
+
+.app {
+  display: flex;
+
+  main {
+    flex: 1 1 0;
+    padding: 2rem;
+
+    @media (max-width: 768px) {
+      padding-left: 6rem;
+    }
+  }
+}
