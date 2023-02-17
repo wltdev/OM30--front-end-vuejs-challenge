@@ -18,9 +18,10 @@ const headers = [
 ]
 
 const items = ref([])
+const emit = defineEmits(['edit'])
 
-const editItem = (id) => {
-  console.log(id)
+const editItem = (item) => {
+  emit('edit', item)
 }
 
 onMounted(() => {
@@ -54,8 +55,8 @@ onMounted(() => {
 
       <template #item-actions="item">
         <div class="operation-wrapper">
-          <CIcon icon-name="edit" type="success" @click="editItem(item.id)" />
-          <CIcon icon-name="delete" type="danger" @click="editItem(item.id)" />
+          <CIcon icon-name="edit" type="success" @click="editItem(item)" />
+          <CIcon icon-name="delete" type="danger" @click="editItem(item)" />
         </div>
       </template>
     </Vue3EasyDataTable>

@@ -1,13 +1,29 @@
 <script setup>
+import { ref } from 'vue'
+import PatientRecordModal from '@/components/patients/PatientRecordModal.vue'
 import PatientsTable from '@/components/patients/PatientsTable.vue'
+
+const selectedRecord = ref(undefined)
+const patientModalOpened = ref(false)
+
+const editModal = (item) => {
+  selectedRecord.value = item
+  patientModalOpened.value = true
+}
 </script>
 
 <template>
   <div class="container">
     <!-- <h3>Patients</h3> -->
     <div class="patients">
-      <PatientsTable />
+      <PatientsTable @edit="(item) => editModal(item)" />
     </div>
+
+    <PatientRecordModal
+      v-if="patientModalOpened"
+      :record="selectedRecord"
+      @close="patientModalOpened = false"
+    />
   </div>
 </template>
 

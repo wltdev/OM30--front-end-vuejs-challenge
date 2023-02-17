@@ -35,13 +35,13 @@ const toogleMenu = () => {
       </router-link>
     </div>
 
-    <div class="menu-footer"></div>
+    <!-- <div class="menu-footer"></div>
     <div class="menu">
       <router-link class="link" to="/settings">
         <span class="material-icons">settings</span>
         <span class="menu-link-name">Settings</span>
       </router-link>
-    </div>
+    </div> -->
   </aside>
 </template>
 
@@ -174,7 +174,7 @@ aside {
 
   @media (max-width: 768px) {
     position: fixed;
-    z-index: 999;
+    z-index: 10;
   }
 }
 </style>
