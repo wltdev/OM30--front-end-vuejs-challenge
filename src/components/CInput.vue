@@ -71,7 +71,7 @@ const emit = defineEmits(['update:value'])
   display: inline-flex;
   align-items: center;
   width: 100%;
-  max-width: 230px;
+  max-width: 200px;
   min-height: 50px;
   margin: 1rem 0;
 

@@ -30,6 +30,7 @@ const state = reactive({
 })
 
 const onSubmit = async () => {
+  console.log(state)
   isLoading.value = true
   let message = 'Patient was updated'
   setTimeout(async () => {
@@ -105,8 +106,8 @@ const onSubmit = async () => {
   .form {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
-    /* gap: 20px; */
+    /* justify-content: space-between; */
+    gap: 20px;
     align-items: center;
     width: 100%;
   }

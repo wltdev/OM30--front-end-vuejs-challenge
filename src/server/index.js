@@ -51,5 +51,18 @@ new Server({
 
       return schema.patients.create(doc)
     })
+
+    this.put('/patients/:id', function (schema, request) {
+      let id = request.params.id
+      let attrs = JSON.parse(request.requestBody)
+
+      return schema.patients.find(id).update(attrs)
+    })
+
+    this.del('/patients/:id', (schema, request) => {
+      let id = request.params.id
+
+      schema.patients.find(id).destroy()
+    })
   }
 })

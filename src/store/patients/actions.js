@@ -1,4 +1,9 @@
-import { getPatients, addPatient } from '@/business/services/patientsService'
+import {
+  getPatients,
+  addPatient,
+  updatePatient,
+  deletePatient
+} from '@/business/services/patientsService'
 import { SET_PATIENTS } from '../mutations'
 
 export const actions = {
@@ -29,9 +34,13 @@ export const actions = {
     try {
       const { patients } = state
 
+      const updatedDoc = await updatePatient(id, payload)
+
+      console.log({ updatedDoc })
+
       for (let i = 0; i < patients.length; i++) {
         if (patients[i].id === id) {
-          patients[i] = payload
+          patients[i] = updatedDoc
           break
         }
       }
@@ -45,6 +54,7 @@ export const actions = {
   removePatient: async ({ commit, state }, id) => {
     const { patients } = state
     try {
+      await deletePatient(id)
       const docs = patients.filter((item) => item.id !== id)
       commit(SET_PATIENTS, docs)
     } catch (error) {
