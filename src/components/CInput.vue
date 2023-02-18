@@ -1,14 +1,24 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 
 const focus = ref(false)
 
-defineProps({
+const props = defineProps({
   disabled: Boolean,
   errorMessage: String,
+  mask: String,
   inputLabel: String,
   type: { type: String, default: 'text' },
   value: String
+})
+
+const inputMask = computed(() => {
+  if (!props.mask) return false
+
+  return {
+    mask: props.mask,
+    lazy: true
+  }
 })
 
 const emit = defineEmits(['update:value'])
@@ -23,6 +33,19 @@ const emit = defineEmits(['update:value'])
     }"
   >
     <input
+      v-if="!mask"
+      :value="value"
+      :type="type"
+      class="c-input__input"
+      :disabled="disabled"
+      v-bind="$attrs"
+      @input="(e) => emit('update:value', e.target.value)"
+      @focus="focus = true"
+      @blur="focus = false"
+    />
+    <input
+      v-else
+      v-imask="inputMask"
       :value="value"
       :type="type"
       class="c-input__input"

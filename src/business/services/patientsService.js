@@ -1,21 +1,8 @@
 import { faker } from '@faker-js/faker'
 
-export const getFakePatients = () => {
-  const patients = []
-
-  for (let i = 0; i < 50; i++) {
-    patients.push({
-      id: faker.database.mongodbObjectId(),
-      photo: faker.internet.avatar(),
-      name: faker.name.fullName(),
-      motherName: faker.name.fullName({ sex: 'female' }),
-      birthday: '10/10/200',
-      cpf: '011.687.987-51',
-      cns: faker.random.numeric(15),
-      address: faker.address.streetAddress(true),
-      createdAt: '01/10/2023'
-    })
-  }
+export const getPatients = async () => {
+  const request = await fetch('/api/patients')
+  const { patients } = await request.json()
 
   return patients
 }
@@ -23,10 +10,18 @@ export const getFakePatients = () => {
 export const addPatient = async (payload) => {
   const data = {
     ...payload,
-    id: faker.database.mongodbObjectId(),
-    address: faker.address.streetAddress(true),
-    createdAt: '01/10/2023'
+    address: faker.address.streetAddress(true)
   }
 
-  return data
+  const request = await fetch('/api/patients', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  })
+
+  const { patient } = await request.json()
+
+  return patient
 }

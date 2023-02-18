@@ -1,10 +1,10 @@
-import { getFakePatients, addPatient } from '@/business/services/patientsService'
+import { getPatients, addPatient } from '@/business/services/patientsService'
 import { SET_PATIENTS } from '../mutations'
 
 export const actions = {
   loadPatients: async ({ commit }) => {
     try {
-      const docs = getFakePatients()
+      const docs = await getPatients()
 
       commit(SET_PATIENTS, docs)
     } catch (error) {

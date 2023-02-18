@@ -5,6 +5,7 @@ import { useStore } from 'vuex'
 import Vue3EasyDataTable from 'vue3-easy-data-table'
 import 'vue3-easy-data-table/dist/style.css'
 import CIcon from '../CIcon.vue'
+import { formatBirthday } from '@/business/helpers/date'
 
 const headers = [
   { text: 'Patient', value: 'name', sortable: true },
@@ -13,7 +14,6 @@ const headers = [
   { text: 'CPF', value: 'cpf' },
   { text: 'CNS', value: 'cns' },
   { text: 'Address', value: 'address' },
-  { text: 'CreatedAt', value: 'createdAt' },
   { text: '', value: 'actions' }
 ]
 
@@ -48,6 +48,10 @@ onMounted(() => {
           <img class="photo" :src="photo" alt="" />
           <span>{{ name }}</span>
         </div>
+      </template>
+
+      <template #item-birthday="{ birthday }">
+        {{ formatBirthday(birthday) }}
       </template>
 
       <template #item-actions="item">

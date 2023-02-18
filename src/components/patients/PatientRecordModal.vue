@@ -59,9 +59,13 @@ const onSubmit = async () => {
         <div class="form">
           <CInput v-model:value="state.name" input-label="Name" />
           <CInput v-model:value="state.motherName" input-label="Mother's Name" />
-          <CInput v-model:value="state.birthday" input-label="Birthday" />
-          <CInput v-model:value="state.cpf" input-label="CPF" />
-          <CInput v-model:value="state.cns" input-label="CNS" />
+          <CInput
+            v-model:value="state.birthday"
+            input-label="Birthday"
+            mask="00/00/0000"
+          />
+          <CInput v-model:value="state.cpf" input-label="CPF" mask="00.000.000-00" />
+          <CInput v-model:value="state.cns" input-label="CNS" mask="000 0000 0000 000" />
           <CInput v-model:value="state.address" input-label="Address" />
         </div>
         <CButton size="big" button-type="submit" :loading="isLoading">Save</CButton>
