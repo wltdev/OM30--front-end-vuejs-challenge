@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, computed } from 'vue'
+import { onMounted, computed, ref } from 'vue'
 import { useStore } from 'vuex'
 
 import Vue3EasyDataTable from 'vue3-easy-data-table'
@@ -19,11 +19,13 @@ const headers = [
 
 const emit = defineEmits(['edit', 'remove'])
 const store = useStore()
+const isLoading = ref(true)
 
 const patients = computed(() => store.getters['getPatients'])
 
 const getDocs = async () => {
   await store.dispatch('loadPatients')
+  isLoading.value = false
 }
 
 onMounted(() => {
@@ -35,11 +37,16 @@ onMounted(() => {
 
 <template>
   <div>
-    <Vue3EasyDataTable :headers="headers" :items="patients" :rows-per-page="10">
+    <Vue3EasyDataTable
+      :loading="isLoading"
+      :headers="headers"
+      :items="patients"
+      :rows-per-page="10"
+    >
       <template #loading>
         <img
-          src="https://thumbs.gfycat.com/AngelicYellowIberianmole.webp"
-          style="width: 60px; height: 100px"
+          src="https://i.pinimg.com/originals/94/fd/2b/94fd2bf50097ade743220761f41693d5.gif"
+          style="width: 100px; height: 80px"
         />
       </template>
 
