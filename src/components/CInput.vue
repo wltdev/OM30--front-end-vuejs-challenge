@@ -61,6 +61,12 @@ const emit = defineEmits(['update:value'])
         {{ inputLabel }}
       </label>
     </transition>
+
+    <transition name="fade">
+      <span v-if="errorMessage" class="c-input__error">
+        {{ errorMessage }}
+      </span>
+    </transition>
   </div>
 </template>
 
@@ -86,6 +92,7 @@ const emit = defineEmits(['update:value'])
 
   &.error {
     border-color: var(--reddish);
+    color: var(--reddish);
   }
 
   &__label {
@@ -101,6 +108,7 @@ const emit = defineEmits(['update:value'])
     position: absolute;
     bottom: -19px;
     left: 0;
+
     &.centered {
       display: table;
       width: 100%;

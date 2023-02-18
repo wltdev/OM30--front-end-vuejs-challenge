@@ -79,7 +79,7 @@ const shadowClick = ($event) => {
     }
 
     &.large {
-      width: 700px;
+      width: 800px;
     }
 
     &.extraLarge {

@@ -10,7 +10,12 @@ defineProps({
 </script>
 
 <template>
-  <button class="c-button" :type="buttonType" :class="[size, { disabled: disabled }]">
+  <button
+    class="c-button"
+    :type="buttonType"
+    :disabled="disabled"
+    :class="[size, { disabled: disabled }]"
+  >
     <ComponentLoading v-if="loading" size="small" />
     <slot />
   </button>
