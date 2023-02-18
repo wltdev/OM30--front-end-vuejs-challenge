@@ -1,6 +1,6 @@
 <script setup>
-import { onMounted, ref } from 'vue'
-import { getFakePatients } from '@/business/services/patientsService'
+import { onMounted, computed } from 'vue'
+import { useStore } from 'vuex'
 
 import Vue3EasyDataTable from 'vue3-easy-data-table'
 import 'vue3-easy-data-table/dist/style.css'
@@ -17,28 +17,25 @@ const headers = [
   { text: '', value: 'actions' }
 ]
 
-const items = ref([])
-const emit = defineEmits(['edit'])
+const emit = defineEmits(['edit', 'remove'])
+const store = useStore()
 
-const editItem = (item) => {
-  emit('edit', item)
+const patients = computed(() => store.getters['getPatients'])
+
+const getDocs = async () => {
+  await store.dispatch('loadPatients')
 }
 
 onMounted(() => {
   setTimeout(() => {
-    items.value = getFakePatients()
+    getDocs()
   }, 2000)
 })
 </script>
 
 <template>
   <div>
-    <Vue3EasyDataTable
-      :header-item-class-name="headerItemClassNameFunction"
-      :headers="headers"
-      :items="items"
-      :rows-per-page="10"
-    >
+    <Vue3EasyDataTable :headers="headers" :items="patients" :rows-per-page="10">
       <template #loading>
         <img
           src="https://thumbs.gfycat.com/AngelicYellowIberianmole.webp"
@@ -55,8 +52,8 @@ onMounted(() => {
 
       <template #item-actions="item">
         <div class="operation-wrapper">
-          <CIcon icon-name="edit" type="success" @click="editItem(item)" />
-          <CIcon icon-name="delete" type="danger" @click="editItem(item)" />
+          <CIcon icon-name="edit" type="success" @click="emit('edit', item)" />
+          <CIcon icon-name="delete" type="danger" @click="emit('remove', item)" />
         </div>
       </template>
     </Vue3EasyDataTable>

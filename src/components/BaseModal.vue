@@ -33,8 +33,8 @@ const shadowClick = ($event) => {
     <div class="modal">
       <div class="modal__shadow" @click="shadowClick($event)">
         <div class="modal__modal" :class="size">
-          <div v-if="!hideCloseBtn" class="modal__modal__close" @click="emit('close')">
-            <img src="@/assets/img/close.svg" alt="" />
+          <div v-if="!hideCloseBtn" class="modal__modal__close" @click="$emit('close')">
+            <img src="@/assets/images/close.svg" alt="" />
           </div>
           <slot />
         </div>

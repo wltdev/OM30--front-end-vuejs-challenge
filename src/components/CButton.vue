@@ -7,17 +7,10 @@ defineProps({
   disabled: Boolean,
   loading: Boolean
 })
-
-const emit = defineEmits(['click'])
 </script>
 
 <template>
-  <button
-    class="c-button"
-    :type="buttonType"
-    :class="[size, { disabled: disabled }]"
-    @click.prevent="!disabled && emit('click')"
-  >
+  <button class="c-button" :type="buttonType" :class="[size, { disabled: disabled }]">
     <ComponentLoading v-if="loading" size="small" />
     <slot />
   </button>
@@ -25,6 +18,11 @@ const emit = defineEmits(['click'])
 
 <style lang="scss" scoped>
 .c-button {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+
   text-transform: uppercase;
   font-size: 1rem;
   background-color: var(--primary);
@@ -33,7 +31,6 @@ const emit = defineEmits(['click'])
   &:hover {
     background-color: var(--secondary);
   }
-
   color: var(--white);
   border: none;
   padding: 0.8rem 1rem;

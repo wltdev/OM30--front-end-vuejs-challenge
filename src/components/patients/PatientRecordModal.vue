@@ -1,5 +1,8 @@
 <script setup>
 import { reactive, ref } from 'vue'
+import { useStore } from 'vuex'
+import { createToaster } from '@meforma/vue-toaster'
+
 import BaseModal from '../BaseModal.vue'
 import CButton from '../CButton.vue'
 import CInput from '../CInput.vue'
@@ -8,7 +11,11 @@ const props = defineProps({
   record: Object
 })
 
+const store = useStore()
 const emit = defineEmits('close')
+const toast = createToaster({
+  position: 'bottom-right'
+})
 
 const isLoading = ref(false)
 
@@ -22,11 +29,19 @@ const state = reactive({
   address: props.record.address ?? ''
 })
 
-const onSubmit = () => {
+const onSubmit = async () => {
   isLoading.value = true
-  setTimeout(() => {
-    console.log(state.name)
+  let message = 'Patient was updated'
+  setTimeout(async () => {
+    if (props.record.id) {
+      await store.dispatch('updatePatient', { id: props.record.id, payload: state })
+    } else {
+      await store.dispatch('storePatient', state)
+      message = 'Patient created'
+    }
     isLoading.value = false
+    toast.success(message)
+    emit('close')
   }, 1000)
 }
 </script>
@@ -49,10 +64,7 @@ const onSubmit = () => {
           <CInput v-model:value="state.cns" input-label="CNS" />
           <CInput v-model:value="state.address" input-label="Address" />
         </div>
-
-        <CButton size="big" button-type="submit" :loading="isLoading" @click="onSubmit"
-          >Save</CButton
-        >
+        <CButton size="big" button-type="submit" :loading="isLoading">Save</CButton>
       </form>
     </div>
   </BaseModal>

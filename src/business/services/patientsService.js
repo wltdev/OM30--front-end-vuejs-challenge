@@ -19,3 +19,14 @@ export const getFakePatients = () => {
 
   return patients
 }
+
+export const addPatient = async (payload) => {
+  const data = {
+    ...payload,
+    id: faker.database.mongodbObjectId(),
+    address: faker.address.streetAddress(true),
+    createdAt: '01/10/2023'
+  }
+
+  return data
+}
