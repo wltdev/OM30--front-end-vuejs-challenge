@@ -54,6 +54,12 @@ onMounted(() => {
         {{ formatBirthday(birthday) }}
       </template>
 
+      <template #item-address="{ address }">
+        <span>{{
+          `${address.street}, ${address.number}, ${address.neighborhood}, ${address.city} - ${address.state}`
+        }}</span>
+      </template>
+
       <template #item-actions="item">
         <div class="operation-wrapper">
           <CIcon icon-name="edit" type="success" @click="emit('edit', item)" />

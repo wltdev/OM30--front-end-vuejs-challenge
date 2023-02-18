@@ -23,15 +23,18 @@ new Server({
       },
 
       cpf: '011.687.987-51',
-
-      cns() {
-        return faker.random.numeric(15)
-      },
+      cns: '293 8480 6382 0008',
 
       address() {
-        return faker.address.streetAddress(true)
-      },
-      createdAt: '01/10/2023'
+        return {
+          zipcode: faker.address.zipCode(),
+          city: faker.address.cityName(),
+          state: faker.address.state(),
+          street: faker.address.streetName(),
+          neighborhood: faker.address.ordinalDirection(),
+          number: faker.address.buildingNumber()
+        }
+      }
     })
   },
 
@@ -64,5 +67,7 @@ new Server({
 
       schema.patients.find(id).destroy()
     })
+
+    this.passthrough('https://viacep.com.br/ws/**')
   }
 })

@@ -9,6 +9,7 @@ import BaseModal from '../BaseModal.vue'
 import CButton from '../CButton.vue'
 import CInput from '../CInput.vue'
 import { faker } from '@faker-js/faker'
+import { getAddresByCEP } from '@/business/helpers/address'
 
 const props = defineProps({
   record: Object
@@ -29,7 +30,15 @@ const state = reactive({
   photo: props.record.photo ?? faker.image.avatar(),
   cpf: props.record.cpf ?? '',
   cns: props.record.cns ?? '',
-  address: props.record.address ?? ''
+  address: {
+    zipcode: props.record.address?.zipcode ?? '',
+    city: props.record.address?.city ?? '',
+    state: props.record.address?.state ?? '',
+    street: props.record.address?.street ?? '',
+    neighborhood: props.record.address?.neighborhood ?? '',
+    complement: props.record.address?.complement ?? '',
+    number: props.record.address?.number ?? ''
+  }
 })
 
 const errors = reactive({
@@ -38,7 +47,14 @@ const errors = reactive({
   birthday: '',
   cpf: '',
   cns: '',
-  address: ''
+  address: {
+    zipcode: '',
+    city: '',
+    state: '',
+    street: '',
+    neighborhood: '',
+    number: ''
+  }
 })
 
 const isValidCPF = computed(() => {
@@ -59,7 +75,14 @@ const resetErrors = () => {
   errors.birthday = ''
   errors.cpf = ''
   errors.cns = ''
-  errors.address = ''
+  errors.address = {
+    zipcode: '',
+    city: '',
+    state: '',
+    street: '',
+    neighborhood: '',
+    number: ''
+  }
 }
 
 // It's not good approach, maybe using formkit is better
@@ -80,8 +103,24 @@ const verifyForm = () => {
     errors.birthday = 'Birthday is required'
     isValid = false
   }
-  if (!state.address.length) {
-    errors.address = 'Address is required'
+  if (!state.address.zipcode) {
+    errors.address.zipcode = 'Zipcode is required'
+    isValid = false
+  }
+  if (!state.address.city) {
+    errors.address.city = 'City is required'
+    isValid = false
+  }
+  if (!state.address.state) {
+    errors.address.state = 'State is required'
+    isValid = false
+  }
+  if (!state.address.neighborhood) {
+    errors.address.neighborhood = 'Neighborhood is required'
+    isValid = false
+  }
+  if (!state.address.number) {
+    errors.address.number = 'Number is required'
     isValid = false
   }
   if (!isValidCNS.value) {
@@ -94,6 +133,20 @@ const verifyForm = () => {
   }
 
   return isValid
+}
+
+const getAddress = async () => {
+  try {
+    const address = await getAddresByCEP(state.address.zipcode)
+
+    if (address.error) {
+      errors.address.cep = 'Zipcode is Invalid'
+    } else {
+      state.address = address
+    }
+  } catch (error) {
+    errors.address.cep = 'Zipcode is Invalid'
+  }
 }
 
 const onSubmit = async () => {
@@ -140,22 +193,49 @@ const onSubmit = async () => {
           <CInput
             v-model:value="state.birthday"
             :error-message="errors.birthday"
-            input-label="Birthday"
+            input-label="Birthday *"
             mask="00/00/0000"
           />
           <CInput
             v-model:value="state.cpf"
             :error-message="errors.cpf"
-            input-label="CPF"
+            input-label="CPF *"
             mask="000.000.000-00"
           />
           <CInput
             v-model:value="state.cns"
             :error-message="errors.cns"
-            input-label="CNS"
-            mask="000 0000 0000 000"
+            input-label="CNS *"
+            mask="000 0000 0000 0000"
           />
-          <CInput v-model:value="state.address" input-label="Address" />
+          <CInput
+            v-model:value="state.address.zipcode"
+            :error-message="errors.address.zipcode"
+            input-label="Zipcode *"
+            mask="00000000"
+            :after-on-blur="true"
+            @blur="getAddress"
+          />
+          <CInput
+            v-model:value="state.address.city"
+            :error-message="errors.address.city"
+            input-label="City *"
+          />
+          <CInput
+            v-model:value="state.address.state"
+            :error-message="errors.address.state"
+            input-label="State *"
+          />
+          <CInput
+            v-model:value="state.address.neighborhood"
+            :error-message="errors.address.neighborhood"
+            input-label="Neighborhood *"
+          />
+          <CInput
+            v-model:value="state.address.number"
+            :error-message="errors.address.number"
+            input-label="Number *"
+          />
         </div>
         <CButton size="big" button-type="submit" :loading="isLoading">Save</CButton>
       </form>

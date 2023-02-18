@@ -11,17 +11,12 @@ export const getPatients = async () => {
 export const addPatient = async (payload) => {
   payload.birthday = unformatBirthday(payload.birthday) // it's not good approach for store date
 
-  const data = {
-    ...payload,
-    address: faker.address.streetAddress(true)
-  }
-
   const request = await fetch('/api/patients', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify(data)
+    body: JSON.stringify(payload)
   })
 
   const { patient } = await request.json()
