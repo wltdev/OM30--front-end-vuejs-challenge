@@ -10,6 +10,8 @@ import CButton from '../CButton.vue'
 import CInput from '../CInput.vue'
 import { faker } from '@faker-js/faker'
 import { getAddresByCEP } from '@/business/helpers/address'
+import { formatBirthday } from '@/business/helpers/date'
+import moment from 'moment'
 
 const props = defineProps({
   record: Object
@@ -26,7 +28,7 @@ const isLoading = ref(false)
 const state = reactive({
   name: props.record.name ?? '',
   motherName: props.record.motherName ?? '',
-  birthday: props.record.birthday ?? '',
+  birthday: props.record.birthday ? moment(props.record.birthday).format('D/M/Y') : '',
   photo: props.record.photo ?? faker.image.avatar(),
   cpf: props.record.cpf ?? '',
   cns: props.record.cns ?? '',
