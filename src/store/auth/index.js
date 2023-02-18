@@ -8,12 +8,14 @@ export default {
   },
 
   getters: {
-    getUser: (state) => state.user
+    getUser: (state) => state.user,
+    getIsLogged: (state) => state.isLogged
   },
 
   mutations: {
     [SET_USER](state, payload) {
       state.user = payload
+      state.isLogged = true
     }
   },
 

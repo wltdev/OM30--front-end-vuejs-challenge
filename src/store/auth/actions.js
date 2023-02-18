@@ -10,6 +10,8 @@ export const actions = {
         email
       }
 
+      localStorage.setItem('user', JSON.stringify(fakeUser))
+
       commit(SET_USER, fakeUser)
     } catch (error) {
       commit(SET_USER_ERROR, 'Invalid email or password')

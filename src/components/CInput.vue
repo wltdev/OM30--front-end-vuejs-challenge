@@ -25,7 +25,7 @@ const emit = defineEmits(['update:value'])
     <input
       :value="value"
       :type="type"
-      class="c-input__input Text-Style-1"
+      class="c-input__input"
       :disabled="disabled"
       v-bind="$attrs"
       @input="(e) => emit('update:value', e.target.value)"
@@ -85,6 +85,7 @@ const emit = defineEmits(['update:value'])
   }
 
   &__input {
+    font-size: 1rem;
     color: var(--grey);
     border: none;
     height: 100%;
